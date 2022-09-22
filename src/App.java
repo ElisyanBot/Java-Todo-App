@@ -22,9 +22,9 @@ public class App {
 
     JFrame frame = new JFrame();
     JMenuBar menuBar = new JMenuBar();
-    JMenu filesMenuTab = new JMenu("files");
-    JMenuItem save = new JMenuItem("save");
-    JMenuItem saveFileAs = new JMenuItem("save as...");
+    JMenu filesMenuTab = new JMenu("File");
+    JMenuItem save = new JMenuItem("Save");
+    JMenuItem saveFileAs = new JMenuItem("Save as...");
     JMenuItem load = new JMenuItem("Open file...");
 
     SaveData saveData = new SaveData();
