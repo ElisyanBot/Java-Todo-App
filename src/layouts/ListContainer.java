@@ -51,7 +51,4 @@ public class ListContainer extends JPanel{
     this.add(this.list, BorderLayout.CENTER);
     this.setVisible(true); //this must be last
   }
-
-
-
 }
