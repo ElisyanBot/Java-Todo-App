@@ -4,34 +4,61 @@ import java.util.Scanner;
 import javax.swing.JFileChooser;
 import java.io.File;
 import java.io.FileWriter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 class DataHandler {
   Scanner scanner;
-  File file;
+  static File file;
   FileWriter writer;
-  static String path;
-  static String savedListsDir = System.getProperty("user.dir")
-      + "\\src\\savedLists\\";
+  static String filePath;
+  static String savedListsDir = System.getProperty("user.dir") + "\\src\\savedLists\\";
 
   public DataHandler() {
 
   }
 
-  // todo: create exceptions/functions for when the user press cancel.
-  static String getSelectedFilePath() {
-    JFileChooser j = new JFileChooser(savedListsDir);
-    j.showOpenDialog(null);
+  static void getSelectedFilePath() {
+    try {
+      JFileChooser chooser = new JFileChooser(savedListsDir);
+      int JFileChooserResult = chooser.showOpenDialog(null);
 
-    path = j.getSelectedFile()
-        .getAbsolutePath()
-        .replace("\\", "/");
-    return path + ".txt";
+      if (JFileChooserResult == JFileChooser.APPROVE_OPTION) {
+        filePath = chooser.getSelectedFile().toString().replace("\\", "/");
+      } else if (JFileChooserResult == JFileChooser.CANCEL_OPTION) {
+        System.out.println("Canceled");
+      }
+    } catch (NullPointerException e) {
+    }
   }
 
-  static String CreateNewFilePath() {
+  static void setSelectedFilePath() {
+    try {
+      JFileChooser chooser = new JFileChooser(savedListsDir);
+      int JFileChooserResult = chooser.showSaveDialog(null);
+      File file = chooser.getSelectedFile();
+      chooser.setFileFilter(new FileNameExtensionFilter("txt file", "txt"));
+
+
+      if (JFileChooserResult == JFileChooser.APPROVE_OPTION) {
+        String fileName = file.toString();
+        if (!fileName.endsWith(".txt")) {
+          fileName += ".txt";
+          setFilePath(fileName
+              .replace("\\", "/"));
+        }
+
+      } else if (JFileChooserResult == JFileChooser.CANCEL_OPTION) {
+        System.out.println("Canceled");
+      }
+    } catch (NullPointerException e) {
+
+    }
+  }
+
+  static String createNewDefaultFileName() {
     int newFileNumber = getHighestFileNameNumber(savedListsDir);
-    String newFilePath = String.format(savedListsDir + "myTodo%d.txt", newFileNumber);
-    return newFilePath;
+    String newFileName = String.format(savedListsDir + "myTodo%d.txt", newFileNumber);
+    return newFileName;
   }
 
   static Integer getHighestFileNameNumber(String folderPath) {
@@ -47,18 +74,18 @@ class DataHandler {
 
           if (fileNr >= currentInt) {
             currentInt = fileNr + 1;
-          }
+          } // todo: add exception handlning if there isnt any numbers in myTodo.txt
         }
       }
     }
-    return currentInt ;
+    return currentInt;
   }
 
-  static String getCurrentPath() {
-    return path;
+  static String getCurrentFilePath() {
+    return filePath;
   };
 
-  void setPath(String newPath) {
-    path = newPath;
+  static void setFilePath(String newPath) {
+    filePath = newPath;
   }
 }

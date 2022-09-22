@@ -18,34 +18,37 @@ public class LoadData extends DataHandler {
   }
 
   void loadItems() {
-    file = new File(getSelectedFilePath());
-    String unchecked = "(\\[\\])";
-    String checked = "(\\[\\w\\])";
-
     try {
+      getSelectedFilePath();
+
+      file = new File(filePath);
       this.scanner = new Scanner(file);
+      String unchecked = "(\\[\\])";
+      String checked = "(\\[\\w\\])";
 
       while (scanner.hasNextLine()) {
-        ListItem loadedItem = new ListItem();
+        ListItem item = new ListItem();
         String innerText = "";
         if (scanner.hasNext(Pattern.compile(unchecked))) {
-          loadedItem.setCheckedStatus(false);
+          item.setCheckedStatus(false);
           innerText = fetchInnerText(scanner.nextLine());
         } 
         else if (scanner.hasNext(Pattern.compile(checked))) {
-          loadedItem.setCheckedStatus(true);
+          item.setCheckedStatus(true);
            innerText = fetchInnerText(scanner.nextLine());
         }
         else {
           innerText = scanner.nextLine();
         }
         
-        loadedItem.setCheckBoxItem(innerText);
-        loadedItems.add(loadedItem);
+        item.setCheckBoxItem(innerText);
+        loadedItems.add(item);
       }
       scanner.close();
 
     } catch (FileNotFoundException e) {
+      e.getStackTrace();
+    } catch(NullPointerException e) {
       e.getStackTrace();
     }
   }
