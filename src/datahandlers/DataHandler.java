@@ -55,7 +55,7 @@ class DataHandler {
     }
   }
 
-  static String createNewDefaultFileName() {
+  static String createNewDefaultFile() {
     int newFileNumber = getHighestFileNameNumber(savedListsDir);
     String newFileName = String.format(savedListsDir + "myTodo%d.txt", newFileNumber);
     return newFileName;

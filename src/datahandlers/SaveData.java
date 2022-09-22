@@ -22,9 +22,10 @@ public class SaveData extends DataHandler {
       this.writeToFile(items);
 
     } catch (NullPointerException e) {
-      String errMsg = "There is no file select, please create or selected a file before Saving";
+      String errMsg = "There is no file select, created a default list instead";
       JOptionPane.showMessageDialog(null, errMsg, "No selected file!", JOptionPane.PLAIN_MESSAGE);
-      setSelectedFilePath();
+      filePath = createNewDefaultFile();
+      this.save(items);
     }
 
     
@@ -33,7 +34,6 @@ public class SaveData extends DataHandler {
   public void SaveAs(ArrayList<ListItem> items) {
     setSelectedFilePath();
     this.writeToFile(items);
-
   }
 
   void writeToFile(ArrayList<ListItem> items) {
